@@ -1,28 +1,28 @@
-// Vercel serverless function that mirrors the Vite dev proxy in vite.config.js.
-// Forwards /api/anthropic/<sub-path> to https://api.anthropic.com/<sub-path>
-// and injects the API key + version header server-side so they never reach
-// the browser bundle.
+// Vercel serverless function at /api/anthropic/v1/messages.
+// Forwards POST requests to https://api.anthropic.com/v1/messages
+// with the API key injected server-side so it never reaches the browser.
 
 export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    res.status(405).json({ error: { message: "Method not allowed" } });
+    return;
+  }
+
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     res.status(500).json({ error: { message: "ANTHROPIC_API_KEY not set on the server" } });
     return;
   }
 
-  const segments = req.query.path;
-  const subPath = Array.isArray(segments) ? segments.join("/") : (segments || "");
-  const url = `https://api.anthropic.com/${subPath}`;
-
   try {
-    const upstream = await fetch(url, {
-      method: req.method,
+    const upstream = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         "x-api-key": apiKey,
         "anthropic-version": "2023-06-01",
       },
-      body: req.method === "GET" || req.method === "HEAD" ? undefined : JSON.stringify(req.body ?? {}),
+      body: JSON.stringify(req.body ?? {}),
     });
 
     const body = await upstream.text();
