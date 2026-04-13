@@ -49,7 +49,7 @@ const TONES = [
 const PLATFORM_LIST = Object.keys(PCFG);
 
 const s = {
-  wrap: { background: "linear-gradient(rgba(10,10,8,0.96), rgba(10,10,8,0.96)), url('/backg.webp') center/cover no-repeat fixed", minHeight: "100vh", color: "#e8e8e0", fontFamily: "'DM Sans', system-ui, sans-serif" },
+  wrap: { background: "linear-gradient(rgba(10,10,8,0.9), rgba(10,10,8,0.9)), url('/backg.webp') center/cover no-repeat fixed", minHeight: "100vh", color: "#e8e8e0", fontFamily: "'DM Sans', system-ui, sans-serif" },
   header: { padding: "20px 28px", borderBottom: "1px solid rgba(184,242,62,0.15)", display: "flex", alignItems: "center", justifyContent: "space-between" },
   logoMark: { width: 36, height: 36, background: "#b8f23e", borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 18, color: "#0a0a08", fontFamily: "Georgia, serif", flexShrink: 0 },
   logoName: { fontSize: 18, fontWeight: 700, letterSpacing: 3, color: "#b8f23e", lineHeight: 1, fontFamily: "Georgia, serif" },
