@@ -7,7 +7,7 @@ const PCFG = {
   "LinkedIn":     { lim: 3000,  risk: "safe",     rl: "B2B friendly",       col: "#0a66c2", rule: "Professional tone. Brand milestones, retail expansion, partnerships, thought leadership. Hemp-derived alternative beverage is fine." },
   "YouTube":      { lim: 5000,  risk: "caution",  rl: "Educational OK",     col: "#ff0000", rule: "Video description only. Education and lifestyle content OK. Include 18+ note. No explicit intoxication claims." },
   "Facebook":     { lim: 63000, risk: "risk",     rl: "Community only",     col: "#1877f2", rule: "Community and lifestyle content only. No product promotions or sale language for THC. Brand storytelling with responsible use language." },
-  "Email / SMS":  { lim: null,  risk: "safe",     rl: "Full freedom",       col: "#b8f23e", rule: "Full creative freedom. Can mention products, doses, deals. Include age verification note and unsubscribe reminder." },
+  "Email / SMS":  { lim: null,  risk: "safe",     rl: "Full freedom",       col: "#803cee", rule: "Full creative freedom. Can mention products, doses, deals. Include age verification note and unsubscribe reminder." },
 };
 
 const PILLARS = [
@@ -48,52 +48,60 @@ const TONES = [
 
 const PLATFORM_LIST = Object.keys(PCFG);
 
+// Design tokens lifted from gorillabeverages.com:
+//   Fonts    — Montserrat (headings), Anybody (body); loaded from Google Fonts via index.html
+//   Palette  — white bg, near-black text (#1a1a1a), purple #803cee accent, green #00a341 CTA,
+//              red #f83a3a / amber #ffb74a for status, muted #666666 for secondary text
+//   Shapes   — pill buttons (radius 9999), softly rounded cards (16–24px), soft primary-tinted shadows
+const HEADING = "'Montserrat', system-ui, sans-serif";
+const BODY = "'Anybody', system-ui, sans-serif";
+
 const s = {
-  wrap: { background: "#0a0a08", minHeight: "100vh", color: "#e8e8e0", fontFamily: "'DM Sans', system-ui, sans-serif" },
-  header: { padding: "20px 28px", borderBottom: "1px solid rgba(184,242,62,0.15)", display: "flex", alignItems: "center", justifyContent: "space-between" },
-  logoMark: { width: 36, height: 36, background: "#b8f23e", borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 18, color: "#0a0a08", fontFamily: "Georgia, serif", flexShrink: 0 },
-  logoName: { fontSize: 18, fontWeight: 700, letterSpacing: 3, color: "#b8f23e", lineHeight: 1, fontFamily: "Georgia, serif" },
-  logoSub: { fontSize: 9, letterSpacing: 2, textTransform: "uppercase", color: "#7a7a6e", fontFamily: "monospace", marginTop: 2 },
-  badge: { fontSize: 10, letterSpacing: 1, color: "#b8f23e", border: "1px solid rgba(184,242,62,0.4)", padding: "5px 12px", borderRadius: 20, fontFamily: "monospace", textTransform: "uppercase" },
-  main: { maxWidth: 960, margin: "0 auto", padding: "32px 28px" },
-  hero: { fontSize: "clamp(38px,6vw,58px)", fontWeight: 700, letterSpacing: 3, lineHeight: 0.95, marginBottom: 10, fontFamily: "Georgia, serif" },
-  heroGreen: { color: "#b8f23e" },
-  heroSub: { fontSize: 14, color: "#7a7a6e", marginBottom: 32, lineHeight: 1.7, maxWidth: 480, fontWeight: 300 },
-  panel: { background: "#141410", border: "1px solid rgba(184,242,62,0.15)", borderRadius: 14, padding: 28, marginBottom: 24 },
-  grid2: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 },
-  fieldLabel: { fontSize: 10, letterSpacing: 2, textTransform: "uppercase", color: "#7a7a6e", fontFamily: "monospace", fontWeight: 500, marginBottom: 6, display: "block" },
-  input: { background: "#1c1c18", border: "1px solid rgba(184,242,62,0.15)", borderRadius: 9, color: "#e8e8e0", fontFamily: "inherit", fontSize: 13, padding: "10px 14px", outline: "none", width: "100%", boxSizing: "border-box" },
-  select: { background: "#1c1c18", border: "1px solid rgba(184,242,62,0.15)", borderRadius: 9, color: "#e8e8e0", fontFamily: "inherit", fontSize: 13, padding: "10px 14px", outline: "none", width: "100%", boxSizing: "border-box" },
-  textarea: { background: "#1c1c18", border: "1px solid rgba(184,242,62,0.15)", borderRadius: 9, color: "#e8e8e0", fontFamily: "inherit", fontSize: 13, padding: "10px 14px", outline: "none", width: "100%", boxSizing: "border-box", resize: "vertical", minHeight: 68, lineHeight: 1.6 },
-  chips: { display: "flex", gap: 7, flexWrap: "wrap" },
-  platGrid: { display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 },
-  genBtn: { width: "100%", padding: "15px", background: "#b8f23e", color: "#0a0a08", border: "none", borderRadius: 11, fontWeight: 700, fontSize: 16, letterSpacing: 2, cursor: "pointer", marginTop: 20, fontFamily: "Georgia, serif", textTransform: "uppercase" },
-  genBtnDis: { width: "100%", padding: "15px", background: "#b8f23e", color: "#0a0a08", border: "none", borderRadius: 11, fontWeight: 700, fontSize: 16, letterSpacing: 2, fontFamily: "Georgia, serif", textTransform: "uppercase", marginTop: 20, opacity: 0.4, cursor: "not-allowed" },
-  errBox: { marginTop: 12, padding: "12px 16px", background: "rgba(224,96,96,0.1)", border: "1px solid rgba(224,96,96,0.3)", borderRadius: 10, color: "#e06060", fontSize: 12, fontFamily: "monospace", lineHeight: 1.6 },
-  progWrap: { marginTop: 12 },
-  progBar: { height: 2, background: "rgba(184,242,62,0.15)", borderRadius: 2, overflow: "hidden" },
-  progMsg: { textAlign: "center", fontFamily: "monospace", fontSize: 11, color: "#b8f23e", letterSpacing: 1, padding: "10px 0 0" },
-  resHeader: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 },
-  resTitle: { fontSize: 26, fontWeight: 700, letterSpacing: 2, color: "#b8f23e", fontFamily: "Georgia, serif" },
-  copyAllBtn: { padding: "7px 16px", border: "1px solid rgba(184,242,62,0.4)", borderRadius: 7, background: "transparent", color: "#b8f23e", fontFamily: "monospace", fontSize: 10, letterSpacing: 1, cursor: "pointer" },
-  postsGrid: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 },
-  pcard: { background: "#141410", border: "1px solid rgba(184,242,62,0.15)", borderRadius: 12, overflow: "hidden", display: "flex", flexDirection: "column" },
-  pcardWide: { background: "#141410", border: "1px solid rgba(184,242,62,0.15)", borderRadius: 12, overflow: "hidden", display: "flex", flexDirection: "column", gridColumn: "1 / -1" },
-  pcardHead: { padding: "11px 15px", borderBottom: "1px solid rgba(184,242,62,0.1)", display: "flex", alignItems: "center", justifyContent: "space-between" },
-  pcardBody: { padding: 16, flex: 1 },
-  postTxt: { fontSize: 13, lineHeight: 1.75, color: "#e8e8e0", whiteSpace: "pre-wrap", fontWeight: 300 },
-  compNote: { marginTop: 10, padding: "8px 10px", background: "#242420", borderRadius: 7, fontSize: 11, color: "#7a7a6e", lineHeight: 1.6, fontFamily: "monospace" },
-  pcardFoot: { padding: "10px 15px", borderTop: "1px solid rgba(184,242,62,0.1)", display: "flex", alignItems: "center", justifyContent: "space-between" },
-  chars: { fontFamily: "monospace", fontSize: 10, color: "#4a4a40" },
-  charsOver: { fontFamily: "monospace", fontSize: 10, color: "#e06060" },
-  cpyBtn: { padding: "5px 12px", border: "1px solid rgba(184,242,62,0.15)", borderRadius: 5, background: "transparent", color: "#7a7a6e", fontSize: 10, fontFamily: "monospace", cursor: "pointer" },
-  cpyBtnDone: { padding: "5px 12px", border: "1px solid #b8f23e", borderRadius: 5, background: "transparent", color: "#b8f23e", fontSize: 10, fontFamily: "monospace", cursor: "pointer" },
-  sumNote: { marginTop: 20, padding: "14px 18px", background: "#1c1c18", border: "1px solid rgba(184,242,62,0.15)", borderRadius: 11, fontSize: 13, color: "#7a7a6e", lineHeight: 1.7 },
+  wrap: { background: "#ffffff", minHeight: "100vh", color: "#212121", fontFamily: BODY },
+  header: { padding: "18px 32px", background: "#080808", color: "#ffffff", display: "flex", alignItems: "center", justifyContent: "space-between" },
+  logoMark: { width: 40, height: 40, background: "#00a341", borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 20, color: "#ffffff", fontFamily: HEADING, flexShrink: 0 },
+  logoName: { fontSize: 15, fontWeight: 700, letterSpacing: "0.22em", color: "#ffffff", lineHeight: 1, fontFamily: HEADING, textTransform: "uppercase" },
+  logoSub: { fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", fontFamily: HEADING, marginTop: 4, fontWeight: 500 },
+  badge: { fontSize: 11, letterSpacing: "0.12em", color: "#ffffff", background: "#803cee", border: "none", padding: "7px 14px", borderRadius: 9999, fontFamily: HEADING, textTransform: "uppercase", fontWeight: 600 },
+  main: { maxWidth: 1100, margin: "0 auto", padding: "56px 32px" },
+  hero: { fontSize: "clamp(40px,6vw,64px)", fontWeight: 800, letterSpacing: "0.005em", lineHeight: 1.05, marginBottom: 16, fontFamily: HEADING, color: "#1a1a1a" },
+  heroAccent: { color: "#803cee" },
+  heroSub: { fontSize: 16, color: "#666666", marginBottom: 40, lineHeight: 1.6, maxWidth: 560, fontWeight: 400, fontFamily: BODY },
+  panel: { background: "#ffffff", border: "1px solid rgba(33,33,33,0.08)", borderRadius: 24, padding: 36, marginBottom: 28, boxShadow: "0 5px 30px rgba(33,33,33,0.06)" },
+  grid2: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 20 },
+  fieldLabel: { fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: "#666666", fontFamily: HEADING, fontWeight: 600, marginBottom: 8, display: "block" },
+  input: { background: "#f4f4f4", border: "1px solid rgba(33,33,33,0.08)", borderRadius: 10, color: "#212121", fontFamily: BODY, fontSize: 14, padding: "12px 16px", outline: "none", width: "100%", boxSizing: "border-box" },
+  select: { background: "#f4f4f4", border: "1px solid rgba(33,33,33,0.08)", borderRadius: 10, color: "#212121", fontFamily: BODY, fontSize: 14, padding: "12px 16px", outline: "none", width: "100%", boxSizing: "border-box" },
+  textarea: { background: "#f4f4f4", border: "1px solid rgba(33,33,33,0.08)", borderRadius: 10, color: "#212121", fontFamily: BODY, fontSize: 14, padding: "12px 16px", outline: "none", width: "100%", boxSizing: "border-box", resize: "vertical", minHeight: 80, lineHeight: 1.6 },
+  chips: { display: "flex", gap: 8, flexWrap: "wrap" },
+  platGrid: { display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10 },
+  genBtn: { width: "100%", padding: "18px", background: "#1a1a1a", color: "#ffffff", border: "none", borderRadius: 9999, fontWeight: 700, fontSize: 14, letterSpacing: "0.14em", cursor: "pointer", marginTop: 24, fontFamily: HEADING, textTransform: "uppercase" },
+  genBtnDis: { width: "100%", padding: "18px", background: "#1a1a1a", color: "#ffffff", border: "none", borderRadius: 9999, fontWeight: 700, fontSize: 14, letterSpacing: "0.14em", fontFamily: HEADING, textTransform: "uppercase", marginTop: 24, opacity: 0.35, cursor: "not-allowed" },
+  errBox: { marginTop: 14, padding: "14px 18px", background: "rgba(248,58,58,0.08)", border: "1px solid rgba(248,58,58,0.25)", borderRadius: 12, color: "#f83a3a", fontSize: 13, fontFamily: BODY, lineHeight: 1.5 },
+  progWrap: { marginTop: 16 },
+  progBar: { height: 3, background: "rgba(33,33,33,0.08)", borderRadius: 3, overflow: "hidden" },
+  progMsg: { textAlign: "center", fontFamily: HEADING, fontSize: 11, color: "#803cee", letterSpacing: "0.18em", textTransform: "uppercase", padding: "12px 0 0", fontWeight: 600 },
+  resHeader: { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 },
+  resTitle: { fontSize: 32, fontWeight: 800, letterSpacing: "0.005em", color: "#1a1a1a", fontFamily: HEADING },
+  copyAllBtn: { padding: "10px 20px", border: "2px solid #1a1a1a", borderRadius: 9999, background: "transparent", color: "#1a1a1a", fontFamily: HEADING, fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", fontWeight: 600 },
+  postsGrid: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 },
+  pcard: { background: "#ffffff", border: "1px solid rgba(33,33,33,0.08)", borderRadius: 16, overflow: "hidden", display: "flex", flexDirection: "column", boxShadow: "0 2px 8px rgba(33,33,33,0.05)" },
+  pcardWide: { background: "#ffffff", border: "1px solid rgba(33,33,33,0.08)", borderRadius: 16, overflow: "hidden", display: "flex", flexDirection: "column", gridColumn: "1 / -1", boxShadow: "0 2px 8px rgba(33,33,33,0.05)" },
+  pcardHead: { padding: "14px 18px", borderBottom: "1px solid rgba(33,33,33,0.06)", display: "flex", alignItems: "center", justifyContent: "space-between" },
+  pcardBody: { padding: 20, flex: 1 },
+  postTxt: { fontSize: 14, lineHeight: 1.7, color: "#212121", whiteSpace: "pre-wrap", fontWeight: 400, fontFamily: BODY },
+  compNote: { marginTop: 12, padding: "10px 12px", background: "#f4f4f4", borderRadius: 8, fontSize: 12, color: "#666666", lineHeight: 1.5, fontFamily: BODY },
+  pcardFoot: { padding: "12px 18px", borderTop: "1px solid rgba(33,33,33,0.06)", display: "flex", alignItems: "center", justifyContent: "space-between" },
+  chars: { fontFamily: HEADING, fontSize: 11, color: "#999999", fontWeight: 500 },
+  charsOver: { fontFamily: HEADING, fontSize: 11, color: "#f83a3a", fontWeight: 600 },
+  cpyBtn: { padding: "6px 14px", border: "1px solid rgba(33,33,33,0.15)", borderRadius: 9999, background: "transparent", color: "#666666", fontSize: 10, fontFamily: HEADING, cursor: "pointer", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em" },
+  cpyBtnDone: { padding: "6px 14px", border: "1px solid #00a341", borderRadius: 9999, background: "transparent", color: "#00a341", fontSize: 10, fontFamily: HEADING, cursor: "pointer", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em" },
+  sumNote: { marginTop: 24, padding: "18px 22px", background: "#f4f4f4", border: "1px solid rgba(33,33,33,0.06)", borderRadius: 16, fontSize: 14, color: "#666666", lineHeight: 1.6, fontFamily: BODY },
 };
 
 function Chip({ label, active, onClick }) {
   return (
-    <div onClick={onClick} style={{ padding: "6px 14px", borderRadius: 20, border: active ? "1px solid #b8f23e" : "1px solid rgba(184,242,62,0.15)", fontSize: 12, fontWeight: 500, cursor: "pointer", background: active ? "#2a3a0e" : "#1c1c18", color: active ? "#b8f23e" : "#7a7a6e", transition: "all 0.15s" }}>
+    <div onClick={onClick} style={{ padding: "8px 18px", borderRadius: 9999, border: active ? "2px solid #803cee" : "1px solid rgba(33,33,33,0.12)", fontSize: 13, fontWeight: 500, cursor: "pointer", background: active ? "rgba(128,60,238,0.08)" : "#ffffff", color: active ? "#803cee" : "#666666", fontFamily: "'Montserrat', sans-serif", transition: "all 0.15s" }}>
       {label}
     </div>
   );
@@ -101,8 +109,8 @@ function Chip({ label, active, onClick }) {
 
 function PlatToggle({ label, active, onClick }) {
   return (
-    <div onClick={onClick} style={{ padding: "9px 12px", borderRadius: 9, border: active ? "1px solid #b8f23e" : "1px solid rgba(184,242,62,0.15)", background: active ? "#2a3a0e" : "#1c1c18", cursor: "pointer", display: "flex", alignItems: "center", gap: 7, fontSize: 12, color: active ? "#b8f23e" : "#7a7a6e", fontWeight: 500, transition: "all 0.15s" }}>
-      <span style={{ width: 7, height: 7, borderRadius: "50%", background: active ? "#b8f23e" : "#4a4a40", flexShrink: 0, display: "inline-block" }} />
+    <div onClick={onClick} style={{ padding: "12px 16px", borderRadius: 12, border: active ? "2px solid #00a341" : "1px solid rgba(33,33,33,0.12)", background: active ? "rgba(0,163,65,0.06)" : "#ffffff", cursor: "pointer", display: "flex", alignItems: "center", gap: 10, fontSize: 13, color: active ? "#00a341" : "#666666", fontWeight: 600, fontFamily: "'Montserrat', sans-serif", transition: "all 0.15s" }}>
+      <span style={{ width: 8, height: 8, borderRadius: "50%", background: active ? "#00a341" : "rgba(33,33,33,0.2)", flexShrink: 0, display: "inline-block" }} />
       {label}
     </div>
   );
@@ -110,12 +118,12 @@ function PlatToggle({ label, active, onClick }) {
 
 function PillBadge({ risk, label }) {
   const colors = {
-    safe:    { color: "#5dca8a", border: "rgba(93,202,138,0.3)",  bg: "rgba(93,202,138,0.08)" },
-    caution: { color: "#f2c14e", border: "rgba(242,193,78,0.3)",  bg: "rgba(242,193,78,0.08)" },
-    risk:    { color: "#e06060", border: "rgba(224,96,96,0.3)",   bg: "rgba(224,96,96,0.08)" },
+    safe:    { color: "#00a341", border: "rgba(0,163,65,0.3)",  bg: "rgba(0,163,65,0.08)" },
+    caution: { color: "#ffb74a", border: "rgba(255,183,74,0.35)", bg: "rgba(255,183,74,0.12)" },
+    risk:    { color: "#f83a3a", border: "rgba(248,58,58,0.3)",  bg: "rgba(248,58,58,0.08)" },
   };
   const c = colors[risk] || colors.safe;
-  return <span style={{ fontSize: 9, fontFamily: "monospace", padding: "3px 9px", borderRadius: 9, border: `1px solid ${c.border}`, background: c.bg, color: c.color }}>{label}</span>;
+  return <span style={{ fontSize: 10, fontFamily: "'Montserrat', sans-serif", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", padding: "4px 10px", borderRadius: 9999, border: `1px solid ${c.border}`, background: c.bg, color: c.color }}>{label}</span>;
 }
 
 export default function App() {
@@ -232,7 +240,7 @@ Platforms: ${selectedPlats.join(", ")}`;
       </div>
 
       <div style={s.main}>
-        <div style={s.hero}>CONTENT THAT<br /><span style={s.heroGreen}>HITS DIFFERENT.</span></div>
+        <div style={s.hero}>Content that<br /><span style={s.heroAccent}>hits different.</span></div>
         <p style={s.heroSub}>Platform-aware AI content for hemp-derived THC beverages. Every post pre-screened for compliance — no flagged terms, no shadowbans.</p>
 
         <div style={s.panel}>
@@ -286,7 +294,7 @@ Platforms: ${selectedPlats.join(", ")}`;
           {loading && (
             <div style={s.progWrap}>
               <div style={s.progBar}>
-                <div style={{ height: "100%", background: "#b8f23e", borderRadius: 2, animation: "none", width: "60%" }} />
+                <div style={{ height: "100%", background: "#803cee", borderRadius: 3, animation: "none", width: "60%" }} />
               </div>
               <div style={s.progMsg}>GENERATING COMPLIANT CONTENT...</div>
             </div>
@@ -308,7 +316,7 @@ Platforms: ${selectedPlats.join(", ")}`;
 
             <div style={s.postsGrid}>
               {posts.map((post, i) => {
-                const cfg = PCFG[post.platform] || { risk: "safe", rl: "", col: "#b8f23e", lim: null };
+                const cfg = PCFG[post.platform] || { risk: "safe", rl: "", col: "#803cee", lim: null };
                 const len = (post.content || "").length;
                 const over = cfg.lim && len > cfg.lim;
                 return (
@@ -334,7 +342,7 @@ Platforms: ${selectedPlats.join(", ")}`;
 
             {summary && (
               <div style={s.sumNote}>
-                <strong style={{ color: "#b8f23e", fontWeight: 500 }}>Compliance summary:</strong> {summary}
+                <strong style={{ color: "#803cee", fontWeight: 600, fontFamily: "'Montserrat', sans-serif", textTransform: "uppercase", letterSpacing: "0.08em", fontSize: 12 }}>Compliance summary:</strong> {summary}
               </div>
             )}
           </div>
