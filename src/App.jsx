@@ -49,7 +49,7 @@ const TONES = [
 const PLATFORM_LIST = Object.keys(PCFG);
 
 const s = {
-  wrap: { background: "#0a0a08", minHeight: "100vh", color: "#e8e8e0", fontFamily: "'DM Sans', system-ui, sans-serif" },
+  wrap: { background: "linear-gradient(rgba(10,10,8,0.96), rgba(10,10,8,0.96)), url('/backg.webp') center/cover no-repeat fixed", minHeight: "100vh", color: "#e8e8e0", fontFamily: "'DM Sans', system-ui, sans-serif" },
   header: { padding: "20px 28px", borderBottom: "1px solid rgba(184,242,62,0.15)", display: "flex", alignItems: "center", justifyContent: "space-between" },
   logoMark: { width: 36, height: 36, background: "#b8f23e", borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 18, color: "#0a0a08", fontFamily: "Georgia, serif", flexShrink: 0 },
   logoName: { fontSize: 18, fontWeight: 700, letterSpacing: 3, color: "#b8f23e", lineHeight: 1, fontFamily: "Georgia, serif" },
@@ -58,7 +58,8 @@ const s = {
   main: { maxWidth: 960, margin: "0 auto", padding: "32px 28px" },
   hero: { fontSize: "clamp(38px,6vw,58px)", fontWeight: 700, letterSpacing: 3, lineHeight: 0.95, marginBottom: 10, fontFamily: "Georgia, serif" },
   heroGreen: { color: "#b8f23e" },
-  heroSub: { fontSize: 14, color: "#7a7a6e", marginBottom: 32, lineHeight: 1.7, maxWidth: 480, fontWeight: 300 },
+  heroSub: { fontSize: 14, color: "#ffffff", marginBottom: 6, lineHeight: 1.7, maxWidth: 520, fontWeight: 300 },
+  heroMeta: { fontSize: 14, color: "#b8f23e", marginBottom: 32, lineHeight: 1.7, maxWidth: 520, fontWeight: 400, marginTop: 0 },
   panel: { background: "#141410", border: "1px solid rgba(184,242,62,0.15)", borderRadius: 14, padding: 28, marginBottom: 24 },
   grid2: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 },
   fieldLabel: { fontSize: 10, letterSpacing: 2, textTransform: "uppercase", color: "#7a7a6e", fontFamily: "monospace", fontWeight: 500, marginBottom: 6, display: "block" },
@@ -221,19 +222,14 @@ Platforms: ${selectedPlats.join(", ")}`;
   return (
     <div style={s.wrap}>
       <div style={s.header}>
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <div style={s.logoMark}>G</div>
-          <div>
-            <div style={s.logoName}>Gorilla</div>
-            <div style={s.logoSub}>Content Engine</div>
-          </div>
-        </div>
+        <img src="/gorilla_lifestyle_logo.avif" alt="Gorilla Lifestyle" style={{ height: 48, display: "block" }} />
         <div style={s.badge}>🛡 THC-Compliant AI</div>
       </div>
 
       <div style={s.main}>
         <div style={s.hero}>CONTENT THAT<br /><span style={s.heroGreen}>HITS DIFFERENT.</span></div>
-        <p style={s.heroSub}>Platform-aware AI content for hemp-derived THC beverages. Every post pre-screened for compliance — no flagged terms, no shadowbans.</p>
+        <p style={s.heroSub}>Platform-aware AI content for hemp-derived THC beverages.</p>
+        <p style={s.heroMeta}>Every post pre-screened for compliance — no flagged terms, no shadowbans.</p>
 
         <div style={s.panel}>
           <div style={s.grid2}>
