@@ -21,6 +21,8 @@ export default defineConfig(({ mode }) => {
             proxy.on('proxyReq', (proxyReq) => {
               if (apiKey) proxyReq.setHeader('x-api-key', apiKey)
               proxyReq.setHeader('anthropic-version', '2023-06-01')
+              proxyReq.removeHeader('origin')
+              proxyReq.removeHeader('referer')
             })
           },
         },

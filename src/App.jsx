@@ -147,13 +147,27 @@ export default function App() {
       return `${p} (limit: ${c.lim ? c.lim + " chars" : "unlimited"}): ${c.rule}`;
     }).join("\n");
 
-    const prompt = `You are a social media content specialist for Gorilla Beverages (gorillalifestyle.com), a Miami-based hemp-derived THC beverage brand. Products: Gorilla Elixir THC Drink (Delta-9, 2.5–5mg/serving), 20mg THC/CBD/HHC energy shots, UNTAMED 50mg Delta-9 shot, Delta-9 gummies. Multi-year partnership with Power Slap (Dana White / UFC). All products Farm Bill compliant, third-party lab tested, CGMP, made in USA, ships nationwide.
+    const prompt = `You are a casual, punchy social media writer for Gorilla Beverages (gorillalifestyle.com) — a Miami-based hemp-derived THC beverage brand. Partnership with Power Slap / UFC. Farm Bill compliant, lab tested, ships nationwide.
 
-BRAND: Premium lifestyle. "Clean buzz, no hangover." Alcohol alternative positioning.
+Products: Gorilla Elixir THC Drink (Delta-9, 2.5–5mg), THC/CBD/HHC 20mg energy shots, UNTAMED 50mg Delta-9 shot, Delta-9 gummies.
+
+VOICE & LENGTH — THIS IS CRITICAL:
+- Write like a friend texting, not a marketing department. Short sentences. Casual. Real.
+- Every post MUST be well under its platform character limit — aim for 50-70% of the max. Shorter is always better.
+- X posts: 1-2 punchy sentences max. No filler.
+- Instagram/TikTok: 2-3 short lines. Let the visual do the work.
+- LinkedIn: Keep it tight — 3-4 sentences, not an essay.
+- YouTube: Brief description, not a blog post.
+- Facebook: Conversational, 2-3 sentences.
+- Email/SMS: Get to the point fast.
+- Cut the fluff. No corporate jargon. No walls of text. If a word doesn't earn its spot, delete it.
+- Use 1-3 relevant hashtags max (not a hashtag dump).
+
+BRAND: "Clean buzz, no hangover." Alcohol alternative. Premium but approachable.
 
 TASK:
 - Topic: ${topic}
-- Content pillar: ${pillar}
+- Pillar: ${pillar}
 - Product: ${product || "brand awareness, no specific product"}
 - Persona: ${persona}
 - Tone: ${tone}
@@ -162,16 +176,14 @@ TASK:
 PLATFORM RULES:
 ${platRules}
 
-GLOBAL RULES (all platforms):
-- NEVER use: high, stoned, buzzed, intoxicated, get you high, psychoactive (unless purely educational on safe platforms)
-- USE instead: smooth experience, clean buzz, balanced, functional, relaxed, calm focus, hemp-derived, alternative beverage
-- Never show or describe consumption
-- Never make health or medical claims
-- Never target minors
-- Frame as lifestyle / social / wellness alcohol alternative
+COMPLIANCE (all platforms):
+- NEVER say: high, stoned, buzzed, intoxicated, get you high, psychoactive
+- USE instead: clean buzz, smooth, balanced, functional, relaxed, hemp-derived
+- No consumption depictions, health claims, or minor targeting
+- Frame as lifestyle / alcohol alternative
 
-Respond ONLY with valid JSON, no markdown, no extra text:
-{"posts":[{"platform":"exact platform name","content":"full post text with emojis and hashtags","compliance_notes":"brief compliance note"}],"summary":"2-3 sentence compliance summary"}
+Respond ONLY with valid JSON, no markdown:
+{"posts":[{"platform":"exact platform name","content":"post text","compliance_notes":"brief note"}],"summary":"1-2 sentence compliance summary"}
 
 Platforms: ${selectedPlats.join(", ")}`;
 
@@ -181,7 +193,7 @@ Platforms: ${selectedPlats.join(", ")}`;
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           model: "claude-sonnet-4-20250514",
-          max_tokens: 4000,
+          max_tokens: 2000,
           messages: [{ role: "user", content: prompt }],
         }),
       });
