@@ -235,7 +235,10 @@ Platforms: ${selectedPlats.join(", ")}`;
     <div style={s.wrap}>
       <div style={s.header}>
         <img src="/gorilla_lifestyle_logo.avif" alt="Gorilla Lifestyle" style={{ height: 48, display: "block" }} />
-        <div style={s.badge}>🛡 THC-Compliant AI</div>
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <div style={s.badge}>🛡 THC-Compliant AI</div>
+          <div style={{ ...s.badge, color: "#7a7a6e", borderColor: "rgba(122,122,110,0.4)" }}>v{__APP_VERSION__}</div>
+        </div>
       </div>
 
       <div style={s.main}>
